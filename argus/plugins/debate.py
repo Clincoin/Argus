@@ -40,9 +40,9 @@ from argus.common import (
 )
 from argus.constants import RANK_RATING_MAP
 from argus.db.models.user import MemberModel
-from argus.modals import DebateVotingRubric
 from argus.models import DebateParticipant, DebateRoom, DebateTopic
 from argus.utils import floor_rating, normalize, update
+from argus.views import DebateVotingSelect
 
 
 @app_commands.default_permissions(send_messages=True)
@@ -1370,8 +1370,8 @@ class Debate(commands.Cog):
             await update(interaction, embed=embed, ephemeral=True)
             return
 
-        await interaction.response.send_modal(
-            DebateVotingRubric(
+        await interaction.response.send_message(
+            view=DebateVotingSelect(
                 states={
                     "room": room,
                     "author": author,
